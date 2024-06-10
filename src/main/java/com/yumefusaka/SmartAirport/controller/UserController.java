@@ -1,7 +1,12 @@
 package com.yumefusaka.SmartAirport.controller;
 
-import com.yumefusaka.SmartAirport.pojo.DTO.UserDTO;
+import com.yumefusaka.SmartAirport.common.JwtProperties;
+import com.yumefusaka.SmartAirport.common.Result;
+import com.yumefusaka.SmartAirport.pojo.DTO.UserLoginDTO;
+import com.yumefusaka.SmartAirport.pojo.DTO.UserRegisterDTO;
+import com.yumefusaka.SmartAirport.pojo.VO.LoginVO;
 import com.yumefusaka.SmartAirport.service.UserService;
+import com.yumefusaka.SmartAirport.utils.JwtUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -11,26 +16,37 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+
 @RestController
 @Slf4j
 @RequestMapping("/user")
-@Tag(name = "用户接口")
+@Tag(name = "通用")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private JwtProperties jwtProperties;
+
     @PostMapping("/register")
     @Operation(summary = "注册")
-    public String register(@RequestBody UserDTO user){
-        userService.add(user);
-        return "注册成功";
+    public Result<String> register(@RequestBody UserRegisterDTO userRegisterDTO) {
+        userService.addUser(userRegisterDTO);
+        return Result.success("注册成功");
     }
 
     @PostMapping("/login")
     @Operation(summary = "登录")
-    public String login(@RequestBody UserDTO userDTO){
-        return userService.login(userDTO) ?"登录成功":"登录失败";
-
+    public Result<LoginVO> login(@RequestBody UserLoginDTO userLoginDTO) {
+        int id = userService.login(userLoginDTO);
+        HashMap<String, Object> claims = new HashMap<>();
+        claims.put("id", id);
+        claims.put("identity", userLoginDTO.getIdentity());
+        String token = JwtUtils.createToken(jwtProperties.getSecretKey(), jwtProperties.getTtl(), claims);
+        LoginVO loginVO = new LoginVO();
+        loginVO.setToken(token);
+        return Result.success(loginVO);
     }
 }

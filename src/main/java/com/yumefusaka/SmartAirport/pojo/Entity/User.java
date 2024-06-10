@@ -1,21 +1,38 @@
 package com.yumefusaka.SmartAirport.pojo.Entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 
 @Data
 @TableName("user")
 public class User {
-    @TableId(value = "id",type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.AUTO)
     public int id;
 
-    @TableField(value="username")
+    @TableField(value = "username")
     public String username;
 
-    @TableField(value="password")
+    @TableField(value = "password")
     public String password;
+
+    @TableField("email")
+    private String email;
+
+    @TableField("name")
+    private String name;
+
+    @TableField("phone")
+    private String phone;
+
+    @TableField("address")
+    private String address;
+
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
+    private LocalDateTime create_time;
+
+    @TableField(value = "update_time", fill = FieldFill.UPDATE)
+    private LocalDateTime update_time;
 }

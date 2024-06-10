@@ -2,7 +2,8 @@ package com.yumefusaka.SmartAirport.interceptor;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.yumefusaka.SmartAirport.common.BaseContent;
+import com.yumefusaka.SmartAirport.common.BaseContext;
+import com.yumefusaka.SmartAirport.common.BaseInfo;
 import com.yumefusaka.SmartAirport.common.JwtProperties;
 import com.yumefusaka.SmartAirport.common.Result;
 import com.yumefusaka.SmartAirport.utils.JwtUtils;
@@ -54,7 +55,10 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         //5.解析token，如果解析失败，返回错误结果（未登录）
         try {
             Claims claims = JwtUtils.parseToken(jwtProperties.getSecretKey(), token);
-            BaseContent.setCurrentId((String) claims.get("studentId"));
+            BaseInfo baseInfo = new BaseInfo();
+            baseInfo.setId(claims.get("id").toString());
+            baseInfo.setIdentity(claims.get("identity").toString());
+            BaseContext.setCurrentId(baseInfo);
         } catch (Exception e) {
             log.info("令牌解析失败!");
 
