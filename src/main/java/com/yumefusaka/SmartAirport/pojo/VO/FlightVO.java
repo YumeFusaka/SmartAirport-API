@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 @Data
 public class FlightVO {
 
+    private int id;
+
     private Long airline_id;
 
     private String flight_number;
