@@ -7,11 +7,12 @@ import com.yumefusaka.SmartAirport.common.BaseContext;
 import com.yumefusaka.SmartAirport.common.Result;
 import com.yumefusaka.SmartAirport.mapper.AirlineMapper;
 import com.yumefusaka.SmartAirport.mapper.FlightMapper;
-import com.yumefusaka.SmartAirport.pojo.DTO.AddFlightDTO;
-import com.yumefusaka.SmartAirport.pojo.DTO.DeleteFlightDTO;
-import com.yumefusaka.SmartAirport.pojo.DTO.PutFlightDTO;
+import com.yumefusaka.SmartAirport.mapper.TicketMapper;
+import com.yumefusaka.SmartAirport.pojo.DTO.*;
 import com.yumefusaka.SmartAirport.pojo.Entity.Airline;
 import com.yumefusaka.SmartAirport.pojo.Entity.Flight;
+import com.yumefusaka.SmartAirport.pojo.Entity.Ticket;
+import com.yumefusaka.SmartAirport.pojo.VO.FindBuyTicketVO;
 import com.yumefusaka.SmartAirport.pojo.VO.FlightVO;
 import com.yumefusaka.SmartAirport.service.AirlineService;
 import org.springframework.beans.BeanUtils;
@@ -30,6 +31,9 @@ public class AirlineServiceImpl extends ServiceImpl<AirlineMapper, Airline> impl
 
     @Autowired
     private FlightMapper flightMapper;
+
+    @Autowired
+    private TicketMapper ticketMapper;
 
     @Override
     public void addFlight(AddFlightDTO addFlightDTO) {
@@ -77,5 +81,52 @@ public class AirlineServiceImpl extends ServiceImpl<AirlineMapper, Airline> impl
         return flightVOS;
     }
 
+    @Override
+    public void addTicket(AddTicketDTO addTicketDTO) {
+        BaseContext.removeCurrentInfo();
+        Ticket ticket = new Ticket();
+        BeanUtils.copyProperties(addTicketDTO, ticket);
+        ticketMapper.insert(ticket);
+    }
+
+    @Override
+    public void deleteTicket(DeleteTicketDTO deleteTicketDTO) {
+        BaseContext.removeCurrentInfo();
+        List<Long> ticketIds = deleteTicketDTO.getTicketIds();
+        for (Long ticketId : ticketIds) {
+            ticketMapper.deleteById(ticketId);
+        }
+    }
+
+    @Override
+    public void updateTicket(PutTicketDTO putTicketDTO) {
+        BaseContext.removeCurrentInfo();
+        Ticket ticket = new Ticket();
+        BeanUtils.copyProperties(putTicketDTO, ticket);
+        ticketMapper.updateById(ticket);
+    }
+
+    @Override
+    public List<FindBuyTicketVO> findTicket(Long pageNo, Long pageSize) {
+        BaseContext.removeCurrentInfo();
+        Page<Ticket> page = new Page<>(pageNo, pageSize);
+        OrderItem orderItem = new OrderItem();
+        orderItem.setColumn("create_time");
+        orderItem.setAsc(true);
+        page.addOrder(orderItem);
+        Page<Ticket> p = ticketMapper.selectPage(page, null);
+        List<Ticket> records = p.getRecords();
+        List<FindBuyTicketVO> findBuyTicketVOS = new ArrayList<>();
+        for (Ticket ticket : records) {
+            FindBuyTicketVO findBuyTicketVO = new FindBuyTicketVO();
+            BeanUtils.copyProperties(ticket, findBuyTicketVO);
+            FlightVO flightVO = new FlightVO();
+            Flight flight = flightMapper.selectById(ticket.getFlight_id());
+            BeanUtils.copyProperties(flight, flightVO);
+            findBuyTicketVO.setFlightVO(flightVO);
+            findBuyTicketVOS.add(findBuyTicketVO);
+        }
+        return findBuyTicketVOS;
+    }
 
 }

@@ -1,10 +1,9 @@
 package com.yumefusaka.SmartAirport.controller;
 
 import com.yumefusaka.SmartAirport.common.Result;
-import com.yumefusaka.SmartAirport.pojo.DTO.AddFlightDTO;
-import com.yumefusaka.SmartAirport.pojo.DTO.DeleteFlightDTO;
-import com.yumefusaka.SmartAirport.pojo.DTO.PutFlightDTO;
+import com.yumefusaka.SmartAirport.pojo.DTO.*;
 import com.yumefusaka.SmartAirport.pojo.Entity.Flight;
+import com.yumefusaka.SmartAirport.pojo.VO.FindBuyTicketVO;
 import com.yumefusaka.SmartAirport.pojo.VO.FlightVO;
 import com.yumefusaka.SmartAirport.service.AirlineService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -50,5 +49,33 @@ public class AirlineController {
     public Result<List<FlightVO>> findFlight(@RequestParam Long pageNo, @RequestParam Long pageSize) {
         List<FlightVO> flightVOList = airlineService.findFlight(pageNo, pageSize);
         return Result.success(flightVOList);
+    }
+
+    @PostMapping("/ticket/add")
+    @Operation(summary = "添加机票")
+    private Result<String> addTicket(@RequestBody AddTicketDTO addTicketDTO) {
+        airlineService.addTicket(addTicketDTO);
+        return Result.success("添加机票成功");
+    }
+
+    @DeleteMapping("/ticket/delete")
+    @Operation(summary = "删除机票")
+    private Result<String> deleteTicket(@RequestBody DeleteTicketDTO deleteTicketDTO) {
+        airlineService.deleteTicket(deleteTicketDTO);
+        return Result.success("删除机票成功");
+    }
+
+    @PutMapping("/ticket/update")
+    @Operation(summary = "更新机票")
+    private Result<String> updateTicket(@RequestBody PutTicketDTO putTicketDTO) {
+        airlineService.updateTicket(putTicketDTO);
+        return Result.success("更新机票成功");
+    }
+
+    @GetMapping("/ticket/find")
+    @Operation(summary = "查询机票")
+    public Result<List<FindBuyTicketVO>> findTicket(@RequestParam Long pageNo, @RequestParam Long pageSize) {
+        List<FindBuyTicketVO> ticketVOList = airlineService.findTicket(pageNo, pageSize);
+        return Result.success(ticketVOList);
     }
 }
