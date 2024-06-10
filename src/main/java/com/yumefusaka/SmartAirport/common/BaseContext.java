@@ -4,15 +4,15 @@ public class BaseContext {
 
     public static ThreadLocal<BaseInfo> threadLocal = new ThreadLocal<>();
 
-    public static void setCurrentId(BaseInfo baseInfo) {
+    public static void setCurrentInfo(BaseInfo baseInfo) {
         threadLocal.set(baseInfo);
     }
 
-    public static BaseInfo getCurrentId() {
+    public static BaseInfo getCurrentInfo() {
         return threadLocal.get();
     }
 
-    public static void removeCurrentId() {
+    public static void removeCurrentInfo() {
         threadLocal.remove();
     }
 }
