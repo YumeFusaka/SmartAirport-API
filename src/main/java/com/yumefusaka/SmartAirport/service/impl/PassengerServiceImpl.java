@@ -10,6 +10,7 @@ import com.yumefusaka.SmartAirport.mapper.*;
 import com.yumefusaka.SmartAirport.pojo.DTO.BuyGoodsDTO;
 import com.yumefusaka.SmartAirport.pojo.DTO.BuyTicketDTO;
 import com.yumefusaka.SmartAirport.pojo.Entity.*;
+import com.yumefusaka.SmartAirport.pojo.VO.BuyGoodsVO;
 import com.yumefusaka.SmartAirport.pojo.VO.FindBuyTicketVO;
 import com.yumefusaka.SmartAirport.pojo.VO.FlightVO;
 import com.yumefusaka.SmartAirport.pojo.VO.LuggageVO;
@@ -123,7 +124,7 @@ public class PassengerServiceImpl extends ServiceImpl<PassengerMapper, Passenger
     }
 
     @Override
-    public List<BuyGoodsDTO> findBuyGoods(Long pageNo, Long pageSize) {
+    public List<BuyGoodsVO> findBuyGoods(Long pageNo, Long pageSize) {
         BaseContext.removeCurrentInfo();
         Page<Goods> page = Page.of(pageNo, pageSize);
         OrderItem orderItem = new OrderItem();
@@ -132,13 +133,13 @@ public class PassengerServiceImpl extends ServiceImpl<PassengerMapper, Passenger
         page.addOrder(orderItem);
         Page<Goods> p = goodsService.page(page);
         List<Goods> records = p.getRecords();
-        List<BuyGoodsDTO> buyGoodsDTOS = new ArrayList<BuyGoodsDTO>();
+        List<BuyGoodsVO> buyGoodsVOS = new ArrayList<BuyGoodsVO>();
         for (Goods goods : records) {
-            BuyGoodsDTO buyGoodsDTO = new BuyGoodsDTO();
-            BeanUtils.copyProperties(goods, buyGoodsDTO);
-            buyGoodsDTOS.add(buyGoodsDTO);
+            BuyGoodsVO buyGoodsVO = new BuyGoodsVO();
+            BeanUtils.copyProperties(goods, buyGoodsVO);
+            buyGoodsVOS.add(buyGoodsVO);
         }
-        return buyGoodsDTOS;
+        return buyGoodsVOS;
     }
 
     @Override

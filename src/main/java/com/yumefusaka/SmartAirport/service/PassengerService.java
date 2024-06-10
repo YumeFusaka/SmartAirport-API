@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.yumefusaka.SmartAirport.pojo.DTO.BuyGoodsDTO;
 import com.yumefusaka.SmartAirport.pojo.DTO.BuyTicketDTO;
 import com.yumefusaka.SmartAirport.pojo.Entity.Passenger;
+import com.yumefusaka.SmartAirport.pojo.VO.BuyGoodsVO;
 import com.yumefusaka.SmartAirport.pojo.VO.FindBuyTicketVO;
 import com.yumefusaka.SmartAirport.pojo.VO.LuggageVO;
 
@@ -16,7 +17,7 @@ public interface PassengerService extends IService<Passenger> {
 
     List<FindBuyTicketVO> findBuyTicketHistory(Long pageNo, Long pageSize);
 
-    List<BuyGoodsDTO> findBuyGoods(Long pageNo, Long pageSize);
+    List<BuyGoodsVO> findBuyGoods(Long pageNo, Long pageSize);
 
     void buyGoods(BuyGoodsDTO buyGoodsDTO);
 

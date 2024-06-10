@@ -3,6 +3,7 @@ package com.yumefusaka.SmartAirport.controller;
 import com.yumefusaka.SmartAirport.common.Result;
 import com.yumefusaka.SmartAirport.pojo.DTO.BuyGoodsDTO;
 import com.yumefusaka.SmartAirport.pojo.DTO.BuyTicketDTO;
+import com.yumefusaka.SmartAirport.pojo.VO.BuyGoodsVO;
 import com.yumefusaka.SmartAirport.pojo.VO.FindBuyTicketVO;
 import com.yumefusaka.SmartAirport.pojo.VO.LuggageVO;
 import com.yumefusaka.SmartAirport.service.GoodsService;
@@ -47,9 +48,9 @@ public class PassengerController {
 
     @GetMapping("/goods/find")
     @Operation(summary = "查询可购买商品")
-    public Result<List<BuyGoodsDTO>> findBuyGoods(@RequestParam Long pageNo, @RequestParam Long pageSize) {
-        List<BuyGoodsDTO> buyGoodsDTOS = passengerService.findBuyGoods(pageNo, pageSize);
-        return Result.success(buyGoodsDTOS);
+    public Result<List<BuyGoodsVO>> findBuyGoods(@RequestParam Long pageNo, @RequestParam Long pageSize) {
+        List<BuyGoodsVO> buyGoodsVOS = passengerService.findBuyGoods(pageNo, pageSize);
+        return Result.success(buyGoodsVOS);
     }
 
     @PostMapping("/goods/buy")
