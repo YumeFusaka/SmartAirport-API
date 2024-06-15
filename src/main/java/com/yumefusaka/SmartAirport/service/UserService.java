@@ -9,7 +9,9 @@ public interface UserService extends IService<User> {
 
     void addUser(UserRegisterDTO userRegisterDTO);
 
-    int findUser(UserLoginDTO userLoginDTO);
+    long findUser(UserLoginDTO userLoginDTO);
 
-    int login(UserLoginDTO userLoginDTO);
+    long login(UserLoginDTO userLoginDTO);
+
+    String getUserNameById(long id, String identity);
 }

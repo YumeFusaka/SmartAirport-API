@@ -16,8 +16,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -43,7 +41,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         String identity = userRegisterDTO.getIdentity();
         UserLoginDTO userLoginDTO = new UserLoginDTO();
         BeanUtils.copyProperties(userRegisterDTO, userLoginDTO);
-        int isExist = findUser(userLoginDTO);
+        long isExist = findUser(userLoginDTO);
         if (isExist != 0)
             throw new RuntimeException("用户已存在");
         if (Objects.equals(identity, Identity.PASSENGER)) {
@@ -67,7 +65,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public int findUser(UserLoginDTO userLoginDTO) {
+    public long findUser(UserLoginDTO userLoginDTO) {
         BaseContext.removeCurrentInfo();
         String identity = userLoginDTO.getIdentity();
         if (Objects.equals(identity, Identity.PASSENGER)) {
@@ -99,11 +97,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public int login(UserLoginDTO userLoginDTO) {
+    public long login(UserLoginDTO userLoginDTO) {
         BaseContext.removeCurrentInfo();
-        int id = findUser(userLoginDTO);
+        long id = findUser(userLoginDTO);
         if (id == 0)
             throw new RuntimeException("未找到此用户,请确保该账号已注册");
         return id;
+    }
+
+    @Override
+    public String getUserNameById(long id, String identity) {
+        if (Objects.equals(identity, Identity.PASSENGER)) {
+            return passengerMapper.selectById(id).getName();
+        } else if (Objects.equals(identity, Identity.MERCHANT)) {
+            return merchantMapper.selectById(id).getName();
+        } else if (Objects.equals(identity, Identity.AIRLINE)) {
+            return airlineMapper.selectById(id).getName();
+        } else if (Objects.equals(identity, Identity.STAFF)) {
+            return staffMapper.selectById(id).getName();
+        }
+        throw new RuntimeException("未找到此用户,请确保该账号已注册");
     }
 }

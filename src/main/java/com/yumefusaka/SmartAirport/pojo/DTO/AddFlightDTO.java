@@ -1,6 +1,7 @@
 package com.yumefusaka.SmartAirport.pojo.DTO;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ public class AddFlightDTO {
 
     private String arrival_city;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime date_of_departure;
 
     private int estimated_travel_time;

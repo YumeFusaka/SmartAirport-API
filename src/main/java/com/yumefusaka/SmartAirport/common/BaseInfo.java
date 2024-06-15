@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class BaseInfo {
 
-    private int id;
+    private long id;
 
     private String identity;
 }

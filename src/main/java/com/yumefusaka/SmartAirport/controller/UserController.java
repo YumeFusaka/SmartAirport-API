@@ -42,13 +42,14 @@ public class UserController {
     @Operation(summary = "登录")
     public Result<LoginVO> login(@RequestBody UserLoginDTO userLoginDTO) {
         log.info("登录用户：{}", userLoginDTO);
-        int id = userService.login(userLoginDTO);
+        LoginVO loginVO = new LoginVO();
+        long id = userService.login(userLoginDTO);
         HashMap<String, Object> claims = new HashMap<>();
         claims.put("id", id);
         claims.put("identity", userLoginDTO.getIdentity());
         String token = JwtUtils.createToken(jwtProperties.getSecretKey(), jwtProperties.getTtl(), claims);
-        LoginVO loginVO = new LoginVO();
         loginVO.setToken(token);
+        loginVO.setName(userService.getUserNameById(id, userLoginDTO.getIdentity()));
         return Result.success(loginVO);
     }
 }

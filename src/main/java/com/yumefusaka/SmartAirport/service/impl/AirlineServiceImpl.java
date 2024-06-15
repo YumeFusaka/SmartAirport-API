@@ -1,5 +1,6 @@
 package com.yumefusaka.SmartAirport.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -37,7 +38,7 @@ public class AirlineServiceImpl extends ServiceImpl<AirlineMapper, Airline> impl
 
     @Override
     public void addFlight(AddFlightDTO addFlightDTO) {
-        int currentId = BaseContext.getCurrentInfo().getId();
+        long currentId = BaseContext.getCurrentInfo().getId();
         BaseContext.removeCurrentInfo();
         Flight flight = new Flight();
         flight.setAirline_id((long) currentId);
@@ -63,14 +64,33 @@ public class AirlineServiceImpl extends ServiceImpl<AirlineMapper, Airline> impl
     }
 
     @Override
-    public List<FlightVO> findFlight(Long pageNo, Long pageSize) {
+    public List<FlightVO> findFlight(FindFlightDTO findFlightDTO) {
         BaseContext.removeCurrentInfo();
-        Page<Flight> page = new Page<>(pageNo, pageSize);
+        Page<Flight> page = new Page<>(findFlightDTO.getPageNo(), findFlightDTO.getPageSize());
         OrderItem orderItem = new OrderItem();
-        orderItem.setColumn("create_time");
+        orderItem.setColumn("date_of_departure");
         orderItem.setAsc(true);
         page.addOrder(orderItem);
-        Page<Flight> p = flightMapper.selectPage(page, null);
+        QueryWrapper<Flight> queryWrapper = new QueryWrapper<>();
+        if (findFlightDTO.getFlight_number() != null) {
+            queryWrapper.like("flight_number", findFlightDTO.getFlight_number());
+        }
+        if (findFlightDTO.getDeparture_city() != null) {
+            queryWrapper.like("departure_city", findFlightDTO.getDeparture_city());
+        }
+        if (findFlightDTO.getArrival_city() != null) {
+            queryWrapper.like("arrival_city", findFlightDTO.getArrival_city());
+        }
+        if (findFlightDTO.getDate_of_departure() != null) {
+            queryWrapper.like("date_of_departure", findFlightDTO.getDate_of_departure());
+        }
+        if (findFlightDTO.getEstimated_travel_time() != 0) {
+            queryWrapper.eq("estimated_travel_time", findFlightDTO.getEstimated_travel_time());
+        }
+        if (findFlightDTO.getCapacity() != 0) {
+            queryWrapper.eq("capacity", findFlightDTO.getCapacity());
+        }
+        Page<Flight> p = flightMapper.selectPage(page, queryWrapper);
         List<Flight> records = p.getRecords();
         List<FlightVO> flightVOS = new ArrayList<>();
         for (Flight flight : records) {
@@ -107,14 +127,51 @@ public class AirlineServiceImpl extends ServiceImpl<AirlineMapper, Airline> impl
     }
 
     @Override
-    public List<FindBuyTicketVO> findTicket(Long pageNo, Long pageSize) {
+    public List<FindBuyTicketVO> findTicket(FindTicketDTO findTicketDTO) {
         BaseContext.removeCurrentInfo();
-        Page<Ticket> page = new Page<>(pageNo, pageSize);
+        Page<Ticket> page = new Page<>(findTicketDTO.getPageNo(), findTicketDTO.getPageSize());
         OrderItem orderItem = new OrderItem();
         orderItem.setColumn("create_time");
         orderItem.setAsc(true);
         page.addOrder(orderItem);
-        Page<Ticket> p = ticketMapper.selectPage(page, null);
+        QueryWrapper<Ticket> queryWrapper = new QueryWrapper<>();
+        if (findTicketDTO.getFlight_number() != null) {
+            queryWrapper.like("flight_number", findTicketDTO.getFlight_number());
+        }
+
+        if (findTicketDTO.getDeparture_city() != null) {
+            queryWrapper.like("departure_city", findTicketDTO.getDeparture_city());
+        }
+
+        if (findTicketDTO.getArrival_city() != null) {
+            queryWrapper.like("arrival_city", findTicketDTO.getArrival_city());
+        }
+
+        if (findTicketDTO.getDate_of_departure() != null) {
+            queryWrapper.like("date_of_departure", findTicketDTO.getDate_of_departure());
+        }
+
+        if (findTicketDTO.getEstimated_travel_time() != 0) {
+            queryWrapper.eq("estimated_travel_time", findTicketDTO.getEstimated_travel_time());
+        }
+
+        if (findTicketDTO.getCapacity() != 0) {
+            queryWrapper.eq("capacity", findTicketDTO.getCapacity());
+        }
+
+        if (findTicketDTO.getPrice() != null) {
+            queryWrapper.eq("price", findTicketDTO.getPrice());
+        }
+
+        if (findTicketDTO.getSeat_class() != null) {
+            queryWrapper.eq("seat_class", findTicketDTO.getSeat_class());
+        }
+
+        if (findTicketDTO.getSeat_number() != null) {
+            queryWrapper.eq("seat_number", findTicketDTO.getSeat_number());
+        }
+        queryWrapper.eq("passenger_id", 0);
+        Page<Ticket> p = ticketMapper.selectPage(page, queryWrapper);
         List<Ticket> records = p.getRecords();
         List<FindBuyTicketVO> findBuyTicketVOS = new ArrayList<>();
         for (Ticket ticket : records) {

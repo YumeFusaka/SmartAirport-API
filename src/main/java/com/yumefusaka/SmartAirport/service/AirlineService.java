@@ -15,7 +15,7 @@ public interface AirlineService extends IService<Airline> {
 
     void updateFlight(PutFlightDTO putFlightDTO);
 
-    List<FlightVO> findFlight(Long pageNo, Long pageSize);
+    List<FlightVO> findFlight(FindFlightDTO findFlightDTO);
 
     void addTicket(AddTicketDTO addTicketDTO);
 
@@ -23,5 +23,5 @@ public interface AirlineService extends IService<Airline> {
 
     void updateTicket(PutTicketDTO putTicketDTO);
 
-    List<FindBuyTicketVO> findTicket(Long pageNo, Long pageSize);
+    List<FindBuyTicketVO> findTicket(FindTicketDTO findTicketDTO);
 }

@@ -63,7 +63,7 @@ public class PassengerServiceImpl extends ServiceImpl<PassengerMapper, Passenger
         orderItem.setAsc(true);
         page.addOrder(orderItem);
         QueryWrapper<Ticket> wrapper = new QueryWrapper<>();
-        wrapper.eq("passenger_id", null);
+        wrapper.eq("passenger_id", 0);
         Page<Ticket> p = ticketService.page(page, wrapper);
         List<Ticket> records = p.getRecords();
         List<FindBuyTicketVO> findBuyTicketVOS = new ArrayList<FindBuyTicketVO>();
