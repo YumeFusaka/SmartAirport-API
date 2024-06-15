@@ -18,7 +18,7 @@ public class FindBuyTicketVO {
 
     private String status;
 
-    private BigDecimal price;
+    private Long price;
 
     private LocalDateTime created_time;
 

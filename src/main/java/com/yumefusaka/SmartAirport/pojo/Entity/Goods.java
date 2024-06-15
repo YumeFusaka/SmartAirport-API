@@ -21,7 +21,7 @@ public class Goods {
     private String description;
 
     @TableField(value = "price")
-    private BigDecimal price;
+    private Long price;
 
     @TableField(value = "stock")
     private Long stock;

@@ -30,7 +30,7 @@ public class User {
     @TableField("address")
     private String address;
 
-    @TableField(value = "create_time", fill = FieldFill.INSERT)
+    @TableField(value = "create_time", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime create_time;
 
     @TableField(value = "update_time", fill = FieldFill.UPDATE)

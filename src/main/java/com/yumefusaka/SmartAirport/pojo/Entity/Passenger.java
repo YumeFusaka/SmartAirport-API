@@ -12,5 +12,5 @@ import java.math.BigDecimal;
 @Data
 public class Passenger extends User {
     @TableField(value = "money")
-    private BigDecimal money;
+    private Long money;
 }

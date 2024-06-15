@@ -16,5 +16,5 @@ public class AddTicketDTO {
 
     private String status;
 
-    private BigDecimal price;
+    private Long price;
 }

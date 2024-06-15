@@ -49,7 +49,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (Objects.equals(identity, Identity.PASSENGER)) {
             Passenger passenger = new Passenger();
             BeanUtils.copyProperties(userRegisterDTO, passenger);
-            passenger.setMoney(BigDecimal.valueOf(100000));
+            passenger.setMoney(10000L);
             passengerMapper.insert(passenger);
         } else if (Objects.equals(identity, Identity.MERCHANT)) {
             Merchant merchant = new Merchant();

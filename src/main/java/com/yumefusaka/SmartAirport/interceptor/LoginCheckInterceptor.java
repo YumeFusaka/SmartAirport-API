@@ -31,8 +31,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         //1.获取请求url
         //2.判断请求url中是否包含login，如果包含，说明是登录操作，放行
         //3.获取请求头中的令牌（token）
-        String token = request.getHeader("token");
-        log.info("从请求头中获取的令牌：{}", token);
+        String token = request.getHeader("Authorization");
 
         //4.判断令牌是否存在，如果不存在，返回错误结果（未登录）
         if (!StringUtils.hasLength(token)) {
@@ -54,6 +53,8 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 
         //5.解析token，如果解析失败，返回错误结果（未登录）
         try {
+            token = token.replace("Bearer ", "");
+            log.info("从请求头中获取的令牌：{}", token);
             Claims claims = JwtUtils.parseToken(jwtProperties.getSecretKey(), token);
             BaseInfo baseInfo = new BaseInfo();
             baseInfo.setId((Integer) claims.get("id"));

@@ -33,6 +33,7 @@ public class UserController {
     @PostMapping("/register")
     @Operation(summary = "注册")
     public Result<String> register(@RequestBody UserRegisterDTO userRegisterDTO) {
+        log.info("注册用户：{}", userRegisterDTO);
         userService.addUser(userRegisterDTO);
         return Result.success("注册成功");
     }
@@ -40,6 +41,7 @@ public class UserController {
     @PostMapping("/login")
     @Operation(summary = "登录")
     public Result<LoginVO> login(@RequestBody UserLoginDTO userLoginDTO) {
+        log.info("登录用户：{}", userLoginDTO);
         int id = userService.login(userLoginDTO);
         HashMap<String, Object> claims = new HashMap<>();
         claims.put("id", id);

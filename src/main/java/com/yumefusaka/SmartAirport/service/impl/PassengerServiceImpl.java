@@ -84,16 +84,16 @@ public class PassengerServiceImpl extends ServiceImpl<PassengerMapper, Passenger
         BaseInfo currentInfo = BaseContext.getCurrentInfo();
         BaseContext.removeCurrentInfo();
         List<Long> ticketIds = buyTicketDTO.getTicketIds();
-        BigDecimal price = new BigDecimal(0);
+        long price = 0;
         for (Long ticketId : ticketIds) {
             Ticket ticket = new Ticket();
             ticket.setId(ticketId);
             ticket.setPassenger_id(Long.valueOf(currentInfo.getId()));
             ticketMapper.updateById(ticket);
-            price = price.add(ticket.getPrice());
+            price = price + ticket.getPrice();
         }
         Passenger passenger = passengerMapper.selectById(currentInfo.getId());
-        passenger.setMoney(passenger.getMoney().subtract(price));
+        passenger.setMoney(passenger.getMoney() - price);
         passengerMapper.updateById(passenger);
     }
 
@@ -147,7 +147,7 @@ public class PassengerServiceImpl extends ServiceImpl<PassengerMapper, Passenger
         BaseInfo currentInfo = BaseContext.getCurrentInfo();
         BaseContext.removeCurrentInfo();
         List<Long> goodsIds = buyGoodsDTO.getGoodsIds();
-        BigDecimal price = new BigDecimal(0);
+        long price = 0;
         for (Long goodsId : goodsIds) {
             Goods goods = goodsMapper.selectById(goodsId);
             Luggage luggage = new Luggage();
@@ -160,10 +160,10 @@ public class PassengerServiceImpl extends ServiceImpl<PassengerMapper, Passenger
             } else {
                 goodsMapper.updateById(goods);
             }
-            price = price.add(goods.getPrice());
+            price = price + goods.getPrice();
         }
         Passenger passenger = passengerMapper.selectById(currentInfo.getId());
-        passenger.setMoney(passenger.getMoney().subtract(price));
+        passenger.setMoney(passenger.getMoney() - price);
         passengerMapper.updateById(passenger);
     }
 

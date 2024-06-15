@@ -32,9 +32,9 @@ public class Ticket {
     private String status;
 
     @TableField(value = "price")
-    private BigDecimal price;
+    private Long price;
 
-    @TableField(value = "created_time", fill = FieldFill.INSERT)
+    @TableField(value = "created_time", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime created_time;
 
     @TableField(value = "updated_time", fill = FieldFill.UPDATE)

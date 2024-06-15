@@ -14,7 +14,7 @@ public class BuyGoodsVO {
 
     private String description;
 
-    private BigDecimal price;
+    private Long price;
 
     private Long stock;
 
