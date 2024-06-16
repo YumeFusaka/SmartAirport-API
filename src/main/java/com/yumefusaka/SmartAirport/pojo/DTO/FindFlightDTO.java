@@ -1,8 +1,11 @@
 package com.yumefusaka.SmartAirport.pojo.DTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.yumefusaka.SmartAirport.common.Page;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.time.LocalDateTime;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -13,7 +16,8 @@ public class FindFlightDTO extends Page {
 
     public String arrival_city;
 
-    public String date_of_departure;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime date_of_departure;
 
     public int estimated_travel_time;
 

@@ -7,5 +7,5 @@ import java.util.List;
 @Data
 public class DeleteFlightDTO {
 
-    List<Long> FlightIds;
+    List<Long> flightIds;
 }

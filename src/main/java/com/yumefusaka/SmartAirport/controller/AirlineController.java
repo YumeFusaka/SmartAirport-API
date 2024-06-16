@@ -55,6 +55,14 @@ public class AirlineController {
         return Result.success(flightVOList);
     }
 
+    @PostMapping("/flight/count")
+    @Operation(summary = "查询航班数量")
+    public Result<Long> countFlight(@RequestBody FindFlightDTO findFlightDTO) {
+        log.info("countFlight");
+        long count = airlineService.countFlight(findFlightDTO);
+        return Result.success(count);
+    }
+
     @PostMapping("/ticket/add")
     @Operation(summary = "添加机票")
     private Result<String> addTicket(@RequestBody AddTicketDTO addTicketDTO) {
@@ -85,5 +93,13 @@ public class AirlineController {
         log.info("findTicketDTO:{}", findTicketDTO);
         List<FindBuyTicketVO> ticketVOList = airlineService.findTicket(findTicketDTO);
         return Result.success(ticketVOList);
+    }
+
+    @GetMapping("/ticket/count")
+    @Operation(summary = "查询机票数量")
+    public Result<Long> countTicket() {
+        log.info("countTicket");
+        long count = airlineService.countTicket();
+        return Result.success(count);
     }
 }

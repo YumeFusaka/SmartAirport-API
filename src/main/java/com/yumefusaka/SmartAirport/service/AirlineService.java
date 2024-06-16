@@ -24,4 +24,8 @@ public interface AirlineService extends IService<Airline> {
     void updateTicket(PutTicketDTO putTicketDTO);
 
     List<FindBuyTicketVO> findTicket(FindTicketDTO findTicketDTO);
+
+    long countFlight(FindFlightDTO findFlightDTO);
+
+    long countTicket();
 }

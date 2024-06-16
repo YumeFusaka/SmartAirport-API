@@ -69,7 +69,7 @@ public class AirlineServiceImpl extends ServiceImpl<AirlineMapper, Airline> impl
         Page<Flight> page = new Page<>(findFlightDTO.getPageNo(), findFlightDTO.getPageSize());
         OrderItem orderItem = new OrderItem();
         orderItem.setColumn("date_of_departure");
-        orderItem.setAsc(true);
+        orderItem.setAsc(false);
         page.addOrder(orderItem);
         QueryWrapper<Flight> queryWrapper = new QueryWrapper<>();
         if (findFlightDTO.getFlight_number() != null) {
@@ -184,6 +184,36 @@ public class AirlineServiceImpl extends ServiceImpl<AirlineMapper, Airline> impl
             findBuyTicketVOS.add(findBuyTicketVO);
         }
         return findBuyTicketVOS;
+    }
+
+    @Override
+    public long countFlight(FindFlightDTO findFlightDTO) {
+        BaseContext.removeCurrentInfo();
+        QueryWrapper<Flight> queryWrapper = new QueryWrapper<>();
+        if (findFlightDTO.getFlight_number() != null) {
+            queryWrapper.like("flight_number", findFlightDTO.getFlight_number());
+        }
+        if (findFlightDTO.getDeparture_city() != null) {
+            queryWrapper.like("departure_city", findFlightDTO.getDeparture_city());
+        }
+        if (findFlightDTO.getArrival_city() != null) {
+            queryWrapper.like("arrival_city", findFlightDTO.getArrival_city());
+        }
+        if (findFlightDTO.getDate_of_departure() != null) {
+            queryWrapper.like("date_of_departure", findFlightDTO.getDate_of_departure());
+        }
+        if (findFlightDTO.getEstimated_travel_time() != 0) {
+            queryWrapper.eq("estimated_travel_time", findFlightDTO.getEstimated_travel_time());
+        }
+        if (findFlightDTO.getCapacity() != 0) {
+            queryWrapper.eq("capacity", findFlightDTO.getCapacity());
+        }
+        return flightMapper.selectCount(queryWrapper);
+    }
+
+    @Override
+    public long countTicket() {
+        return ticketMapper.selectCount(null);
     }
 
 }

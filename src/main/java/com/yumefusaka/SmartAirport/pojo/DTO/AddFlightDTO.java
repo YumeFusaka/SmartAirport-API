@@ -12,7 +12,7 @@ public class AddFlightDTO {
 
     private String flight_number;
 
-    private int capacity;
+    private long capacity;
 
     private String departure_city;
 
