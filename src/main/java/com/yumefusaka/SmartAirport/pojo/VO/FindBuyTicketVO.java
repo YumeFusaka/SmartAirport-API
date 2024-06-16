@@ -20,9 +20,9 @@ public class FindBuyTicketVO {
 
     private Long price;
 
-    private LocalDateTime created_time;
+    private LocalDateTime create_time;
 
-    private LocalDateTime updated_time;
+    private LocalDateTime update_time;
 
     private FlightVO flightVO;
 }
