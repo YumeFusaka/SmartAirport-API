@@ -246,6 +246,7 @@ public class AirlineServiceImpl extends ServiceImpl<AirlineMapper, Airline> impl
         if (findTicketDTO.getSeat_number() != 0) {
             queryWrapper.eq("seat_number", findTicketDTO.getSeat_number());
         }
+        queryWrapper.eq("passenger_id", 0);
         return ticketMapper.selectCount(queryWrapper);
     }
 

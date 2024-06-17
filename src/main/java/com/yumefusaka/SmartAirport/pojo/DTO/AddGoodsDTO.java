@@ -14,7 +14,7 @@ public class AddGoodsDTO {
 
     private long price;
 
-    private Long stock;
+    private long stock;
 
     private String category;
 }

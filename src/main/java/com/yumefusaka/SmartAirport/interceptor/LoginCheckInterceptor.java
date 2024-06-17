@@ -57,7 +57,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
             log.info("从请求头中获取的令牌：{}", token);
             Claims claims = JwtUtils.parseToken(jwtProperties.getSecretKey(), token);
             BaseInfo baseInfo = new BaseInfo();
-            baseInfo.setId((Integer) claims.get("id"));
+            baseInfo.setId(Long.parseLong(claims.get("id").toString()));
             baseInfo.setIdentity(claims.get("identity").toString());
             BaseContext.setCurrentInfo(baseInfo);
         } catch (Exception e) {

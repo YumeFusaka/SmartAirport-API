@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 @Data
 public class AddTicketDTO {
 
-    private Long flight_id;
+    private long flight_id;
 
     private String seat_class;
 
@@ -16,5 +16,5 @@ public class AddTicketDTO {
 
     private String status;
 
-    private Long price;
+    private long price;
 }

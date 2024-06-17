@@ -22,7 +22,7 @@ public class Ticket {
     private String seat_class;
 
     @TableField(value = "seat_number")
-    private int seat_number;
+    private Integer seat_number;
 
     @TableField(value = "status")
     private String status;
@@ -30,7 +30,7 @@ public class Ticket {
     @TableField(value = "price")
     private Long price;
 
-    @TableField(value = "create_time", fill = FieldFill.INSERT_UPDATE)
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
     private LocalDateTime create_time;
 
     @TableField(value = "update_time", fill = FieldFill.UPDATE)
@@ -50,5 +50,5 @@ public class Ticket {
     private LocalDateTime date_of_departure;
 
     @TableField(value = "estimated_travel_time")
-    private int estimated_travel_time;
+    private Integer estimated_travel_time;
 }

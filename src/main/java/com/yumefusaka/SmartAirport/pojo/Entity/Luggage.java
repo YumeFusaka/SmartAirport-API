@@ -21,10 +21,10 @@ public class Luggage {
     private String description;
 
     @TableField(value = "passenger_id")
-    private long passenger_id;
+    private Long passenger_id;
 
     @TableField(value = "number")
-    private int number;
+    private Integer number;
 
     @TableField(value = "category")
     private String category;

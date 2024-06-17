@@ -3,6 +3,8 @@ package com.yumefusaka.SmartAirport.controller;
 import com.yumefusaka.SmartAirport.common.Result;
 import com.yumefusaka.SmartAirport.pojo.DTO.BuyGoodsDTO;
 import com.yumefusaka.SmartAirport.pojo.DTO.BuyTicketDTO;
+import com.yumefusaka.SmartAirport.pojo.DTO.FindTicketDTO;
+import com.yumefusaka.SmartAirport.pojo.DTO.HistoryTicketDTO;
 import com.yumefusaka.SmartAirport.pojo.VO.BuyGoodsVO;
 import com.yumefusaka.SmartAirport.pojo.VO.FindBuyTicketVO;
 import com.yumefusaka.SmartAirport.pojo.VO.LuggageVO;
@@ -25,10 +27,10 @@ public class PassengerController {
     @Autowired
     private PassengerService passengerService;
 
-    @GetMapping("/ticket/find")
+    @PostMapping("/ticket/find")
     @Operation(summary = "查询可购买机票")
-    public Result<List<FindBuyTicketVO>> findBuyTicket(@RequestParam Long pageNo, @RequestParam Long pageSize) {
-        List<FindBuyTicketVO> findBuyTicketVOS = passengerService.findBuyTicket(pageNo, pageSize);
+    public Result<List<FindBuyTicketVO>> findBuyTicket(@RequestBody FindTicketDTO findTicketDTO) {
+        List<FindBuyTicketVO> findBuyTicketVOS = passengerService.findBuyTicket(findTicketDTO);
         return Result.success(findBuyTicketVOS);
     }
 
@@ -39,14 +41,22 @@ public class PassengerController {
         return Result.success("购票成功");
     }
 
-    @GetMapping("/ticket/history")
+    @PostMapping("/ticket/history")
     @Operation(summary = "查询购买机票历史")
-    public Result<List<FindBuyTicketVO>> findBuyTicketHistory(@RequestParam Long pageNo, @RequestParam Long pageSize) {
-        List<FindBuyTicketVO> findBuyTicketVOS = passengerService.findBuyTicketHistory(pageNo, pageSize);
+    public Result<List<FindBuyTicketVO>> findBuyTicketHistory(@RequestBody HistoryTicketDTO historyTicketDTO) {
+        List<FindBuyTicketVO> findBuyTicketVOS = passengerService.findBuyTicketHistory(historyTicketDTO);
         return Result.success(findBuyTicketVOS);
     }
 
-    @GetMapping("/goods/find")
+    @PostMapping("/ticket/history/count")
+    @Operation(summary = "查询历史机票数量")
+    public Result<Long> countTicket(@RequestBody HistoryTicketDTO historyTicketDTO) {
+        log.info("countTicket:{}", historyTicketDTO);
+        long count = passengerService.countHistoryTicket(historyTicketDTO);
+        return Result.success(count);
+    }
+
+    @PostMapping("/goods/find")
     @Operation(summary = "查询可购买商品")
     public Result<List<BuyGoodsVO>> findBuyGoods(@RequestParam Long pageNo, @RequestParam Long pageSize) {
         List<BuyGoodsVO> buyGoodsVOS = passengerService.findBuyGoods(pageNo, pageSize);
@@ -61,11 +71,20 @@ public class PassengerController {
     }
 
 
-    @GetMapping("/luggage/find")
+    @PostMapping("/luggage/find")
     @Operation(summary = "查询行李")
     public Result<List<LuggageVO>> findLuggage(@RequestParam Long pageNo, @RequestParam Long pageSize) {
         List<LuggageVO> luggageVOS = passengerService.findLuggageHistory(pageNo, pageSize);
         return Result.success(luggageVOS);
     }
+
+    @PostMapping("/ticket/count")
+    @Operation(summary = "查询机票数量")
+    public Result<Long> countTicket(@RequestBody FindTicketDTO findTicketDTO) {
+        log.info("countTicket:{}", findTicketDTO);
+        long count = passengerService.countTicket(findTicketDTO);
+        return Result.success(count);
+    }
+
 
 }

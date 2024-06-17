@@ -21,7 +21,7 @@ public class Flight {
     private String flight_number;
 
     @TableField(value = "capacity")
-    private int capacity;
+    private Integer capacity;
 
     @TableField(value = "departure_city")
     private String departure_city;
@@ -33,5 +33,5 @@ public class Flight {
     private LocalDateTime date_of_departure;
 
     @TableField(value = "estimated_travel_time")
-    private int estimated_travel_time;
+    private Integer estimated_travel_time;
 }

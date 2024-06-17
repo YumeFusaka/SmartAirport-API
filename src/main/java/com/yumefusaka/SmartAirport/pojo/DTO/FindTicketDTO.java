@@ -23,7 +23,7 @@ public class FindTicketDTO extends Page {
 
     public int capacity;
 
-    private Long price;
+    private long price;
 
     private String seat_class;
 
