@@ -6,6 +6,7 @@ import com.yumefusaka.SmartAirport.pojo.DTO.BuyGoodsDTO;
 import com.yumefusaka.SmartAirport.pojo.DTO.DeleteGoodsDTO;
 import com.yumefusaka.SmartAirport.pojo.DTO.PutGoodsDTO;
 import com.yumefusaka.SmartAirport.pojo.VO.BuyGoodsVO;
+import com.yumefusaka.SmartAirport.service.GoodsService;
 import com.yumefusaka.SmartAirport.service.MerchantService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,31 +25,40 @@ public class MerchantController {
     @Autowired
     private MerchantService merchantService;
 
-    @PostMapping("/Goods/add")
+    @Autowired
+    private GoodsService goodsService;
+
+    @PostMapping("/goods/add")
     @Operation(summary = "添加商品")
     public Result<String> addGoods(@RequestBody AddGoodsDTO addGoodsDTO) {
         merchantService.addGoods(addGoodsDTO);
         return Result.success("添加商品成功");
     }
 
-    @DeleteMapping("/Goods/delete")
+    @DeleteMapping("/goods/delete")
     @Operation(summary = "删除商品")
     public Result<String> deleteGoods(@RequestBody DeleteGoodsDTO deleteGoodsDTO) {
         merchantService.deleteGoods(deleteGoodsDTO);
         return Result.success("删除商品成功");
     }
 
-    @GetMapping("/Goods/find")
+    @GetMapping("/goods/find")
     @Operation(summary = "查找商品")
     public Result<List<BuyGoodsVO>> findGoods(@RequestParam Long pageNo, @RequestParam Long pageSize) {
-        merchantService.findGoods(pageNo, pageSize);
-        return Result.success();
+        List<BuyGoodsVO> goods = merchantService.findGoods(pageNo, pageSize);
+        return Result.success(goods);
     }
 
-    @PutMapping("/Goods/update")
+    @PutMapping("/goods/update")
     @Operation(summary = "更新商品")
     public Result<String> updateGoods(@RequestBody PutGoodsDTO putGoodsDTO) {
         merchantService.updateGoods(putGoodsDTO);
         return Result.success("更新商品成功");
+    }
+
+    @GetMapping("/goods/count")
+    @Operation(summary = "查找商品数量")
+    public Result<Long> countGoods() {
+        return Result.success(goodsService.count());
     }
 }

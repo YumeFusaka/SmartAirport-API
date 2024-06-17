@@ -211,6 +211,7 @@ public class PassengerServiceImpl extends ServiceImpl<PassengerMapper, Passenger
             Luggage luggage = new Luggage();
             BeanUtils.copyProperties(goods, luggage);
             luggage.setPassenger_id(currentInfo.getId());
+            luggage.setId(null);
             luggageMapper.insert(luggage);
             goods.setStock(goods.getStock() - 1);
             if (goods.getStock() == 0) {

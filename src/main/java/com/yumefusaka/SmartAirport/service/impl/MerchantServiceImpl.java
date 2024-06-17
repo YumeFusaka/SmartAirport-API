@@ -55,10 +55,6 @@ public class MerchantServiceImpl extends ServiceImpl<MerchantMapper, Merchant> i
     public List<BuyGoodsVO> findGoods(Long pageNo, Long pageSize) {
         BaseContext.removeCurrentInfo();
         Page<Goods> page = Page.of(pageNo, pageSize);
-        OrderItem orderItem = new OrderItem();
-        orderItem.setColumn("create_time");
-        orderItem.setAsc(true);
-        page.addOrder(orderItem);
         Page<Goods> p = goodsService.page(page);
         List<Goods> records = p.getRecords();
         List<BuyGoodsVO> buyGoodsVOS = new ArrayList<BuyGoodsVO>();
