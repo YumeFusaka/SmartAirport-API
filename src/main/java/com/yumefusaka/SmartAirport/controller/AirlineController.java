@@ -95,11 +95,11 @@ public class AirlineController {
         return Result.success(ticketVOList);
     }
 
-    @GetMapping("/ticket/count")
+    @PostMapping("/ticket/count")
     @Operation(summary = "查询机票数量")
-    public Result<Long> countTicket() {
-        log.info("countTicket");
-        long count = airlineService.countTicket();
+    public Result<Long> countTicket(@RequestBody FindTicketDTO findTicketDTO) {
+        log.info("countTicket:{}", findTicketDTO);
+        long count = airlineService.countTicket(findTicketDTO);
         return Result.success(count);
     }
 }

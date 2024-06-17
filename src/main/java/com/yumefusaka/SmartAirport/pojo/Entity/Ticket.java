@@ -1,9 +1,6 @@
 package com.yumefusaka.SmartAirport.pojo.Entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -12,7 +9,7 @@ import java.time.LocalDateTime;
 @TableName("ticket")
 public class Ticket {
 
-    @TableId(value = "id")
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     @TableField(value = "flight_id")
@@ -25,7 +22,7 @@ public class Ticket {
     private String seat_class;
 
     @TableField(value = "seat_number")
-    private String seat_number;
+    private int seat_number;
 
     @TableField(value = "status")
     private String status;
@@ -33,9 +30,25 @@ public class Ticket {
     @TableField(value = "price")
     private Long price;
 
-    @TableField(value = "created_time", fill = FieldFill.INSERT_UPDATE)
-    private LocalDateTime created_time;
+    @TableField(value = "create_time", fill = FieldFill.INSERT_UPDATE)
+    private LocalDateTime create_time;
 
-    @TableField(value = "updated_time", fill = FieldFill.UPDATE)
-    private LocalDateTime updated_time;
+    @TableField(value = "update_time", fill = FieldFill.UPDATE)
+    private LocalDateTime update_time;
+
+
+    @TableField(value = "flight_number")
+    private String flight_number;
+
+    @TableField(value = "departure_city")
+    private String departure_city;
+
+    @TableField(value = "arrival_city")
+    private String arrival_city;
+
+    @TableField(value = "date_of_departure")
+    private LocalDateTime date_of_departure;
+
+    @TableField(value = "estimated_travel_time")
+    private int estimated_travel_time;
 }

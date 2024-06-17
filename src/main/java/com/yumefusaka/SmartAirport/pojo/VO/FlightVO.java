@@ -13,7 +13,7 @@ public class FlightVO {
 
     private String flight_number;
 
-    private long capacity;
+    private int capacity;
 
     private String departure_city;
 

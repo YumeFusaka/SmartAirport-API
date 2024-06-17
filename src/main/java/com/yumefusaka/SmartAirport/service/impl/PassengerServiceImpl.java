@@ -68,12 +68,8 @@ public class PassengerServiceImpl extends ServiceImpl<PassengerMapper, Passenger
         List<Ticket> records = p.getRecords();
         List<FindBuyTicketVO> findBuyTicketVOS = new ArrayList<FindBuyTicketVO>();
         for (Ticket ticket : records) {
-            Flight flight = flightMapper.selectById(ticket.getFlight_id());
-            FlightVO flightVO = new FlightVO();
-            BeanUtils.copyProperties(flight, flightVO);
             FindBuyTicketVO findBuyTicketVO = new FindBuyTicketVO();
             BeanUtils.copyProperties(ticket, findBuyTicketVO);
-            findBuyTicketVO.setFlightVO(flightVO);
             findBuyTicketVOS.add(findBuyTicketVO);
         }
         return findBuyTicketVOS;
@@ -112,12 +108,8 @@ public class PassengerServiceImpl extends ServiceImpl<PassengerMapper, Passenger
         List<Ticket> records = p.getRecords();
         List<FindBuyTicketVO> findBuyTicketVOS = new ArrayList<FindBuyTicketVO>();
         for (Ticket ticket : records) {
-            Flight flight = flightMapper.selectById(ticket.getFlight_id());
-            FlightVO flightVO = new FlightVO();
-            BeanUtils.copyProperties(flight, flightVO);
             FindBuyTicketVO findBuyTicketVO = new FindBuyTicketVO();
             BeanUtils.copyProperties(ticket, findBuyTicketVO);
-            findBuyTicketVO.setFlightVO(flightVO);
             findBuyTicketVOS.add(findBuyTicketVO);
         }
         return findBuyTicketVOS;

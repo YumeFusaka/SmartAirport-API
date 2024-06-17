@@ -1,5 +1,6 @@
 package com.yumefusaka.SmartAirport.pojo.VO;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -14,7 +15,7 @@ public class FindBuyTicketVO {
 
     private String seat_class;
 
-    private String seat_number;
+    private int seat_number;
 
     private String status;
 
@@ -24,5 +25,13 @@ public class FindBuyTicketVO {
 
     private LocalDateTime update_time;
 
-    private FlightVO flightVO;
+    private String flight_number;
+
+    private String departure_city;
+
+    private String arrival_city;
+
+    private LocalDateTime date_of_departure;
+
+    private int estimated_travel_time;
 }

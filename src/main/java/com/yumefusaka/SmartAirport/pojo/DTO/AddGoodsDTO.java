@@ -12,7 +12,7 @@ public class AddGoodsDTO {
 
     private String description;
 
-    private BigDecimal price;
+    private long price;
 
     private Long stock;
 

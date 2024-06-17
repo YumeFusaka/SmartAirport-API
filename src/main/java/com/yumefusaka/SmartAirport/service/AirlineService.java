@@ -27,5 +27,5 @@ public interface AirlineService extends IService<Airline> {
 
     long countFlight(FindFlightDTO findFlightDTO);
 
-    long countTicket();
+    long countTicket(FindTicketDTO findTicketDTO);
 }

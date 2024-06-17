@@ -21,7 +21,7 @@ public class Flight {
     private String flight_number;
 
     @TableField(value = "capacity")
-    private long capacity;
+    private int capacity;
 
     @TableField(value = "departure_city")
     private String departure_city;

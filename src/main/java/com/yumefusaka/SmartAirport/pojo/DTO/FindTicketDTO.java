@@ -27,6 +27,6 @@ public class FindTicketDTO extends Page {
 
     private String seat_class;
 
-    private String seat_number;
+    private int seat_number;
 
 }
