@@ -10,7 +10,7 @@ public class LuggageVO {
 
     private String description;
 
-    private int passenger_id;
+    private long passenger_id;
 
     private int number;
 

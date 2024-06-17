@@ -56,11 +56,18 @@ public class PassengerController {
         return Result.success(count);
     }
 
-    @PostMapping("/goods/find")
+    @GetMapping("/goods/find")
     @Operation(summary = "查询可购买商品")
     public Result<List<BuyGoodsVO>> findBuyGoods(@RequestParam Long pageNo, @RequestParam Long pageSize) {
         List<BuyGoodsVO> buyGoodsVOS = passengerService.findBuyGoods(pageNo, pageSize);
         return Result.success(buyGoodsVOS);
+    }
+
+    @GetMapping("/goods/count")
+    @Operation(summary = "查询商品数量")
+    public Result<Long> countGoods() {
+        long count = passengerService.count();
+        return Result.success(count);
     }
 
     @PostMapping("/goods/buy")
@@ -71,11 +78,18 @@ public class PassengerController {
     }
 
 
-    @PostMapping("/luggage/find")
+    @GetMapping("/luggage/find")
     @Operation(summary = "查询行李")
     public Result<List<LuggageVO>> findLuggage(@RequestParam Long pageNo, @RequestParam Long pageSize) {
         List<LuggageVO> luggageVOS = passengerService.findLuggageHistory(pageNo, pageSize);
         return Result.success(luggageVOS);
+    }
+
+    @GetMapping("/luggage/count")
+    @Operation(summary = "查询行李数量")
+    public Result<Long> countLuggage() {
+        long count = passengerService.countLuggage();
+        return Result.success(count);
     }
 
     @PostMapping("/ticket/count")

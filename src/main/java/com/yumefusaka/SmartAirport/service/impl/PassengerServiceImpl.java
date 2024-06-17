@@ -190,10 +190,6 @@ public class PassengerServiceImpl extends ServiceImpl<PassengerMapper, Passenger
     public List<BuyGoodsVO> findBuyGoods(Long pageNo, Long pageSize) {
         BaseContext.removeCurrentInfo();
         Page<Goods> page = Page.of(pageNo, pageSize);
-        OrderItem orderItem = new OrderItem();
-        orderItem.setColumn("create_time");
-        orderItem.setAsc(false);
-        page.addOrder(orderItem);
         Page<Goods> p = goodsService.page(page);
         List<Goods> records = p.getRecords();
         List<BuyGoodsVO> buyGoodsVOS = new ArrayList<BuyGoodsVO>();
@@ -230,10 +226,6 @@ public class PassengerServiceImpl extends ServiceImpl<PassengerMapper, Passenger
         BaseInfo currentInfo = BaseContext.getCurrentInfo();
         BaseContext.removeCurrentInfo();
         Page<Luggage> page = Page.of(pageNo, pageSize);
-        OrderItem orderItem = new OrderItem();
-        orderItem.setColumn("create_time");
-        orderItem.setAsc(false);
-        page.addOrder(orderItem);
         QueryWrapper<Luggage> wrapper = new QueryWrapper<>();
         wrapper.eq("passenger_id", currentInfo.getId());
         Page<Luggage> p = luggageService.page(page);
@@ -315,5 +307,13 @@ public class PassengerServiceImpl extends ServiceImpl<PassengerMapper, Passenger
         return ticketMapper.selectCount(queryWrapper);
     }
 
+    @Override
+    public long countLuggage() {
+        long current_id = BaseContext.getCurrentInfo().getId();
+        BaseContext.removeCurrentInfo();
+        QueryWrapper<Luggage> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("passenger_id", current_id);
+        return luggageMapper.selectCount(queryWrapper);
+    }
 
 }

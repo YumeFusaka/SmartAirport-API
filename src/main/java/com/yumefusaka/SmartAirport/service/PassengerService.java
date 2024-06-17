@@ -30,4 +30,6 @@ public interface PassengerService extends IService<Passenger> {
     long countTicket(FindTicketDTO findTicketDTO);
 
     long countHistoryTicket(HistoryTicketDTO historyTicketDTO);
+
+    long countLuggage();
 }
